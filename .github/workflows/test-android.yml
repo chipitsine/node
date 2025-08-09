@@ -48,7 +48,7 @@ jobs:
           MY_ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
         run: |
           echo $MY_ANDROID_NDK_HOME
-          ls MY_ANDROID_NDK_HOME
+          ls $MY_ANDROID_NDK_HOME
           #./android-configure $MY_ANDROID_NDK_HOME $ANDROID_TARGET_SDK_VERSION arm64
           #make  
 
