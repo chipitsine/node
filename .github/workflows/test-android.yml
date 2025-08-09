@@ -1,0 +1,53 @@
+name: Test Android
+
+on: [ push, workflow_dispatch ]
+
+env:
+  SCCACHE_GHA_ENABLED: 'true'
+  ANDROID_TARGET_SDK_VERSION: 24
+
+permissions:
+  contents: read
+
+jobs:
+  test-android:
+    if: github.event.pull_request.draft == false
+    runs-on: ${{ matrix.os }}
+    env:
+      TARGET_ARCH: ${{ matrix.config.target_arch }}
+      ANDROID_NDK_VERSION: ${{ matrix.ndk }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04]
+        ndk: [r26d, r27d]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.6
+
+      - name: Install build utils
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-multilib g++-multilib
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: ${{ env.ANDROID_NDK_VERSION }}
+          add-to-path: false
+
+      - name: Build
+        env:
+          MY_ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        run: |
+          ./android-configure $MY_ANDROID_NDK_HOME $ANDROID_TARGET_SDK_VERSION arm64
+          make  
+
+
+
