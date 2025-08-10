@@ -66,6 +66,10 @@ os.environ['PATH'] += os.pathsep + toolchain_path + "/bin"
 os.environ['CC'] = toolchain_path + "/bin/" + TOOLCHAIN_PREFIX + android_sdk_version + "-" +  "clang"
 os.environ['CXX'] = toolchain_path + "/bin/" + TOOLCHAIN_PREFIX + android_sdk_version + "-" + "clang++"
 
+
+os.environ['CC_host'] = os.popen('command -v gcc').read().strip()
+os.environ['CXX_host'] = os.popen('command -v g++').read().strip()
+
 GYP_DEFINES = "target_arch=" + arch
 GYP_DEFINES += " v8_target_arch=" + arch
 GYP_DEFINES += " android_target_arch=" + arch
@@ -74,4 +78,4 @@ GYP_DEFINES += " android_ndk_path=" + android_ndk_path
 os.environ['GYP_DEFINES'] = GYP_DEFINES
 
 if os.path.exists("./configure"):
-    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --cross-compiling")
+    os.system("./configure --dest-cpu=" + DEST_CPU + " --dest-os=android --openssl-no-asm --with-intl=none --cross-compiling --shared")
