@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04]
-        ndk: [r21e, r22b, r23, r24, r25, r26d, r27d]
+        ndk: [r27d, r28c]
 
     steps:
       - uses: actions/checkout@v4
