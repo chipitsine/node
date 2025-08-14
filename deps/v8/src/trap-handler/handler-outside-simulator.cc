@@ -16,7 +16,7 @@
 
 // Define the v8::internal::trap_handler::ProbeMemory function declared in
 // trap-handler-simulators.h.
-#if V8_HOST_ARCH_X64
+#if V8_TARGET_ARCH_X64
 asm(".att_syntax                                                \n"
     ".globl " SYMBOL(v8_internal_simulator_ProbeMemory) "       \n"
     SYMBOL(v8_internal_simulator_ProbeMemory) ":                \n"
