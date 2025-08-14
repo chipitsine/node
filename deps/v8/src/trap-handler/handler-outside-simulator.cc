@@ -40,7 +40,7 @@ asm(".att_syntax                                                \n"
     SYMBOL(v8_simulator_probe_memory_continuation) ":           \n"
     // If the trap handler continues here, it wrote the landing pad in %rax.
     "  ret                                                      \n");
-#elif V8_HOST_ARCH_ARM64
+#elif V8_TARGET_ARCH_ARM64
 asm(".globl " SYMBOL(v8_internal_simulator_ProbeMemory) "       \n"
     SYMBOL(v8_internal_simulator_ProbeMemory) ":                \n"
     // First parameter (address) passed in x0.
